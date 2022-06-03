@@ -1,0 +1,15 @@
+*{
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+}
+body{
+	background-color: #eee !important;
+}
+
+.t-muted{
+	color: rgba(0, 0, 0, .5);
+}
+.justify-content-space-around{
+	justify-content: space-around;
+}
