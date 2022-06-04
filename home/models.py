@@ -46,7 +46,7 @@ class Video(models.Model):
 	d_datetime	= models.CharField(max_length=50)
 	user				= models.ForeignKey(User, on_delete=models.PROTECT, blank=True, null=True)
 	local_src 	= models.FileField(upload_to=save_video)
-	thumbnail 	= models.FileField(upload_to=thumbnail_upload)
+	thumbnail 	= models.CharField(max_length=300)
 
 	def __str__(self):
 		return self.title
