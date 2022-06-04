@@ -49,7 +49,7 @@
 				
 			</div>
 			{% if video.local_src %}
-			
+					<img src="{{video.thumbnail.url}}">
 					<a href="{{video.local_src.url}}" class="btn btn-success w-25">Download Now</a>
 
 				{% else %}
