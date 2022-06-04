@@ -21,6 +21,10 @@ def getExtention(filename, ext=None):
 			return filename[c:]
 	return filename.split(".")
 
+def thumbnail_upload(d_datetime,filename):
+        thumbnail,extention = getExtention(filename)
+        return "media/thumbnails/%s/%s.%s"%(d_datetime,thumbnail,extention)
+
 def zip_directory(folder_path, zip_path):
     with zipfile.ZipFile(zip_path, mode='w') as zipf:
         len_dir_path = len(folder_path)
@@ -31,9 +35,7 @@ def zip_directory(folder_path, zip_path):
                 
 
 
-def save_video(instance,filename, ext=None):
-	# imageFile,extention = getExtention(filename,ext=ext)
-	
+def save_video(instance,filename, ext=None):	
 	zip_directory("media/files/%s"%(instance.d_datetime), "media/files/%s.zip"%(instance.d_datetime))
 	return "media/files/%s.zip"%(instance.d_datetime)
 
@@ -44,6 +46,7 @@ class Video(models.Model):
 	d_datetime	= models.CharField(max_length=50)
 	user				= models.ForeignKey(User, on_delete=models.PROTECT, blank=True, null=True)
 	local_src 	= models.FileField(upload_to=save_video)
+	thumbnail 	= models.CharField(max_length=300)
 
 	def __str__(self):
 		return self.title
