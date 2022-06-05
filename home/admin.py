@@ -1,4 +1,3 @@
 from django.contrib import admin
-from .models import Video,Playlist
+from .models import Video
 admin.site.register(Video)
-admin.site.register(Playlist)

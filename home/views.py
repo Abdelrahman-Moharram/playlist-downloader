@@ -62,7 +62,11 @@ def Download_Video(url, v_quality, vs_option):
 
 
 def index(request):
+    
     if request.method == "POST":
+        if not request.session['videos']:
+            print("\n\n\nhere\n\n\n")
+            request.session['videos'] = []
         url = request.POST['url']
         if "list" in url :
             if "index" not in url:
@@ -76,7 +80,14 @@ def index(request):
                 if request.user.username:
                     new_video.user = request.user
                 new_video.save()
-                return render(request, "home/index.html",{"video":new_video})
+                request.session['videos'].append(new_video.id)
+                videos = []
+                for v in request.session['videos']:
+                    sv = Video.objects.filter(id=v)[0]
+                    if sv:
+                        videos.append(sv)
+                    print("\n\n\n\n\n\nlists",v,":",videos,"\n\n\n\n\n\n")
+                return render(request, "home/index.html",{"videos":videos})
         
 
         # download videos
@@ -92,6 +103,14 @@ def index(request):
         if request.user.username:
             new_video.user = request.user
         new_video.save()
-        return render(request, "home/index.html",{"video":new_video})
-                
+        request.session['videos'].append(new_video.id)
+        print("\n\n\n\n\n\nvideos",request.session['videos'],"\n\n\n\n\n\n")
+        videos = []
+        for v in request.session['videos']:
+            sv = Video.objects.filter(id=v)[0]
+            if sv:
+                videos.append(sv)
+            print("\n\n\n\n\n\nvideos",v,":",videos,"\n\n\n\n\n\n")
+        return render(request, "home/index.html",{"videos":videos})
+    
     return render(request, "home/index.html",{})

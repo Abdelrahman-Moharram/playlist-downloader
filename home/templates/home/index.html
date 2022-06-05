@@ -45,30 +45,34 @@
 						</select>
 					</div>
 				</form>
-
-
-				<div class="card mt-5 w-100">
-					<div class="row g-0">
-						<div class="col-md-4">
-							<img src="{{video.thumbnail}}" class="img-fluid rounded-start" alt="...">
-						</div>
-						<div class="col-md-8">
-							<div class="card-body">
-								<h5 class="card-title">{{video.title}}</h5>
-								<p class="card-text mt-3"><a href="{{video.local_src.url}}" class="btn btn-success w-25">Download Now</a></p>
-							</div>
-						</div>
-					</div>
-				</div>
+				{% if videos|length > 0 %}
 				
-			</div>
-			{% if video.local_src %}
+					{% for video in videos %}
+						
+						{% if video.local_src %}
+								<div class="card mt-5 w-100">
+									<div class="row g-0">
+										<div class="col-md-4">
+											<img src="{{video.thumbnail}}" class="img-fluid rounded-start" alt="...">
+										</div>
+										<div class="col-md-8">
+											<div class="card-body">
+												<h5 class="card-title">{{video.title}}</h5>
+												<p class="card-text mt-3"><a href="{{video.local_src.url}}" class="btn btn-success w-25">Download Now</a></p>
+											</div>
+										</div>
+									</div>
+								</div>
+						{% else %}
+						{% endif %}
 					
-
-					
-
-				{% else %}
+					{% endfor %}
 				{% endif %}
+				</div>
+					
+
+					
+
 		</div>
 	</div>
 

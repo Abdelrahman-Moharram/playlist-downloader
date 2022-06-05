@@ -4,12 +4,22 @@ from django.contrib.auth.models import User
 import zipfile
 import os
 
-class Playlist(models.Model):
-	user				= models.ForeignKey(User, on_delete=models.PROTECT, blank=True, null=True)
-	url 				= models.CharField(max_length=500)
-	title 			= models.CharField(max_length=200)
-	d_datetime	= models.CharField(max_length=50)
-	
+def save_video(instance,filename, ext=None):	
+	zip_directory("media/files/%s"%(instance.d_datetime), "media/files/%s.zip"%(instance.d_datetime))
+	return "media/files/%s.zip"%(instance.d_datetime)
+
+
+# class Playlist(models.Model):
+# 	title 			= models.CharField(max_length=200)
+# 	url 				= models.CharField(max_length=500)
+# 	d_datetime	= models.CharField(max_length=50)
+# 	user				= models.ForeignKey(User, on_delete=models.PROTECT, blank=True, null=True)
+# 	local_src 	= models.FileField(upload_to=save_video)
+# 	thumbnail 	= models.CharField(max_length=300)
+
+# 	def __str__(self):
+# 		return self.title
+
 def getExtention(filename, ext=None):
 	if ext:
 		return filename, ext
@@ -35,9 +45,6 @@ def zip_directory(folder_path, zip_path):
                 
 
 
-def save_video(instance,filename, ext=None):	
-	zip_directory("media/files/%s"%(instance.d_datetime), "media/files/%s.zip"%(instance.d_datetime))
-	return "media/files/%s.zip"%(instance.d_datetime)
 
 class Video(models.Model):
 	
@@ -50,5 +57,4 @@ class Video(models.Model):
 
 	def __str__(self):
 		return self.title
-
 
