@@ -1,12 +1,15 @@
-from wsgiref.util import FileWrapper
-from django.shortcuts import redirect, render, HttpResponse
+from django.shortcuts import render
 from pytube.contrib.playlist import Playlist
 from pytube import YouTube
 from pytube.cli import on_progress
 import datetime
 import os
-from .models import Video, save_video, thumbnail_upload
-import pathlib,urllib.request,uuid
+from .models import Video, save_video
+from django.core.management.base import BaseCommand, CommandError
+from .models import Video, VideoManager
+from datetime import datetime
+from django.utils import timezone
+
 
 
 
@@ -16,7 +19,8 @@ import pathlib,urllib.request,uuid
 def Download_Playlist(url, v_quality, vs_option):
     playlist = Playlist(url)
     # print(playlist)
-    print("Total Videos: ",len(playlist.video_urls))
+    length = len(playlist.video_urls)
+    print("Total Videos: ",length)
     folder = str(datetime.datetime.timestamp(datetime.datetime.now()))
     os.makedirs("media/files/"+folder)
     for video_url in playlist.video_urls:
@@ -35,8 +39,8 @@ def Download_Playlist(url, v_quality, vs_option):
             print(yt.title)
             files = stream.download(filename="media/files/"+folder+"/"+yt.title+".mp4")
     if vs_option != "video":
-        return yt.title, folder, None, "mp3", yt.thumbnail_url
-    return yt.title, folder, None, "mp4", yt.thumbnail_url
+        return yt.title, folder, None, "mp3", yt.thumbnail_url, length
+    return yt.title, folder, None, "mp4", yt.thumbnail_url, length
 
 def Download_Video(url, v_quality, vs_option):
     folder = str(datetime.datetime.timestamp(datetime.datetime.now()))
@@ -62,55 +66,58 @@ def Download_Video(url, v_quality, vs_option):
 
 
 def index(request):
-    
     if request.method == "POST":
-        if not request.session['videos']:
-            print("\n\n\nhere\n\n\n")
-            request.session['videos'] = []
+        vids = request.session["videos"]
         url = request.POST['url']
         if "list" in url :
             if "index" not in url:
-        
-                # download playlist
 
+
+        # download playlist
                 downloaded = Download_Playlist(url, request.POST['v-quality'], request.POST['vs-option'])
-                new_video = Video.objects.create(url=request.POST['url'], title=downloaded[0], d_datetime=downloaded[1])
+                new_video = Video.objects.create(url=request.POST['url'], title=downloaded[0], d_datetime=downloaded[1], link_type=0, length=downloaded[5], quality= request.POST['v-quality'])
                 new_video.thumbnail = downloaded[4]
                 new_video.local_src =  save_video(new_video, downloaded[0], ext=downloaded[3])
                 if request.user.username:
                     new_video.user = request.user
                 new_video.save()
-                request.session['videos'].append(new_video.id)
+                vids.insert(0, new_video.id)
                 videos = []
-                for v in request.session['videos']:
+                for v in vids:
                     sv = Video.objects.filter(id=v)[0]
                     if sv:
                         videos.append(sv)
-                    print("\n\n\n\n\n\nlists",v,":",videos,"\n\n\n\n\n\n")
+                request.session["videos"] = vids
                 return render(request, "home/index.html",{"videos":videos})
         
 
-        # download videos
-        
 
 
+        # download videos        
         downloaded = Download_Video(url, request.POST['v-quality'], request.POST['vs-option'])
-
-        new_video = Video.objects.create(url=request.POST['url'], title=downloaded[0], d_datetime=downloaded[1], thumbnail=downloaded[4])
+        new_video = Video.objects.create(url=request.POST['url'], title=downloaded[0], d_datetime=downloaded[1], link_type=1, length=1, quality= request.POST['v-quality'])
         new_video.local_src =  save_video(new_video, downloaded[0], ext=downloaded[3])
-        print(downloaded[4])
         new_video.thumbnail = downloaded[4]
+        if downloaded[3] == "mp3":
+            new_video.file_type = 0
+        else:
+            new_video.file_type = 1
+
         if request.user.username:
             new_video.user = request.user
+        
         new_video.save()
-        request.session['videos'].append(new_video.id)
-        print("\n\n\n\n\n\nvideos",request.session['videos'],"\n\n\n\n\n\n")
+        vids.insert(0, new_video.id)
         videos = []
-        for v in request.session['videos']:
+        
+        for v in vids:
             sv = Video.objects.filter(id=v)[0]
             if sv:
                 videos.append(sv)
-            print("\n\n\n\n\n\nvideos",v,":",videos,"\n\n\n\n\n\n")
+        
+        request.session["videos"] = vids
         return render(request, "home/index.html",{"videos":videos})
-    
+    request.session["videos"] = []
+    print("Video.objects.select_old()=> ",Video.objects.select_old())
+    Video.objects.select_old().delete()
     return render(request, "home/index.html",{})

@@ -13,3 +13,32 @@ body{
 .justify-content-space-around{
 	justify-content: space-around;
 }
+.type-icon{
+	margin-top: 7%;
+	float: right;
+	display: flex;
+}
+.type-icon i.bi{
+	font-size: 21px;
+	margin: 0px;
+	padding: 0px;
+}
+.quality-icon{
+	color: #fff;
+	font-size: 10px;
+	background-color: #333;
+	box-shadow: 0px 0px 10px #fff;
+	margin: 0px 0px;
+	display: inline;
+	position: unset;
+	padding: 3px 5px 3px 3px;
+	/* position: absolute; */
+	box-sizing: border-box;
+	border-radius: 3px;
+}
+.icon-container{
+	margin: 0px 3px;
+}
+.h-90{
+	height: 90%;
+}
