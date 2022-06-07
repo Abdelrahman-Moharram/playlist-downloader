@@ -2,8 +2,42 @@ from django.db import models
 from django.contrib.auth.models import User
 import zipfile
 import os
+from datetime import datetime, date, timedelta
+import shutil
 from django.utils import timezone
-import datetime
+
+
+
+
+
+
+
+
+		
+class VideoManager(models.Manager):
+	def select_old(self):
+			startdate = timezone.now()
+			enddate = startdate - timedelta(days=7)
+			vids = Video.objects.filter(pdatetime__range=["2011-01-31 12:00:00", enddate])
+			self.delete_data()
+			vids.delete()
+
+
+	def delete_data(self):
+		if Video.pdatetime in ("2011-01-31 12:00:00", timezone.now() - timedelta(hours=1)) or len(Video.objects.all()) == 0:
+			try:
+				shutil.rmtree("media/files/")
+			except:
+				pass
+
+
+
+
+
+
+
+
+
 
 def save_video(instance,filename, ext=None):	
 	zip_directory("media/files/%s"%(instance.d_datetime), "media/files/%s.zip"%(instance.d_datetime))
@@ -18,31 +52,24 @@ def getExtention(filename, ext=None):
 	if "." not in filename:
 		return filename.split(".")
 	for c in range (len(filename)-1,0,-1):
-		print(c, " => ",filename[c])
 		if c == ".":
 			return filename[c:]
 	return filename.split(".")
 
 def thumbnail_upload(d_datetime,filename):
-        thumbnail,extention = getExtention(filename)
-        return "media/thumbnails/%s/%s.%s"%(d_datetime,thumbnail,extention)
+		thumbnail,extention = getExtention(filename)
+		return "media/thumbnails/%s/%s.%s"%(d_datetime,thumbnail,extention)
 
 def zip_directory(folder_path, zip_path):
-    with zipfile.ZipFile(zip_path, mode='w') as zipf:
-        len_dir_path = len(folder_path)
-        for root, _, files in os.walk(folder_path):
-            for file in files:
-                file_path = os.path.join(root, file)
-                zipf.write(file_path, file_path[len_dir_path:])
-                
+	with zipfile.ZipFile(zip_path, mode='w') as zipf:
+		len_dir_path = len(folder_path)
+		for root, _, files in os.walk(folder_path):
+			for file in files:
+				file_path = os.path.join(root, file)
+				zipf.write(file_path, file_path[len_dir_path:])
 
 
-		
-class VideoManager(models.Manager):
-    def select_old(self):
-    	day_ago = timezone.now() - datetime.timedelta(days=1)
-    	print("day_ago",day_ago)
-    	return self.filter(pdatetime=day_ago)
+
 
 class Video(models.Model):
 	
@@ -56,8 +83,7 @@ class Video(models.Model):
 	link_type 	= models.IntegerField(default=1)
 	length 			= models.IntegerField()
 	quality 		= models.CharField(max_length=10, blank=True, null=True)
-	pdatetime 	= models.DateTimeField(auto_now=True)
-	
+	pdatetime		= models.DateTimeField(auto_now=True)
 	objects 		= VideoManager()
 
 	def __str__(self):

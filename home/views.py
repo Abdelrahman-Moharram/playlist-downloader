@@ -8,7 +8,6 @@ from .models import Video, save_video
 from django.core.management.base import BaseCommand, CommandError
 from .models import Video, VideoManager
 from datetime import datetime
-from django.utils import timezone
 
 
 
@@ -21,7 +20,7 @@ def Download_Playlist(url, v_quality, vs_option):
     # print(playlist)
     length = len(playlist.video_urls)
     print("Total Videos: ",length)
-    folder = str(datetime.datetime.timestamp(datetime.datetime.now()))
+    folder = str(datetime.timestamp(datetime.now()))
     os.makedirs("media/files/"+folder)
     for video_url in playlist.video_urls:
         yt=YouTube(video_url,on_progress_callback=on_progress)
@@ -43,7 +42,7 @@ def Download_Playlist(url, v_quality, vs_option):
     return yt.title, folder, None, "mp4", yt.thumbnail_url, length
 
 def Download_Video(url, v_quality, vs_option):
-    folder = str(datetime.datetime.timestamp(datetime.datetime.now()))
+    folder = str(datetime.timestamp(datetime.now()))
     os.makedirs("media/files/"+folder)
     yt=YouTube(url,on_progress_callback=on_progress)
     if vs_option != "video":
@@ -118,6 +117,5 @@ def index(request):
         request.session["videos"] = vids
         return render(request, "home/index.html",{"videos":videos})
     request.session["videos"] = []
-    print("Video.objects.select_old()=> ",Video.objects.select_old())
-    Video.objects.select_old().delete()
+    Video.objects.select_old()
     return render(request, "home/index.html",{})
