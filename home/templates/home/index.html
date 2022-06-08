@@ -1,59 +1,54 @@
 {% extends 'base.html' %}
 {% load static%}
 {% load embed_video_tags %}
-
+{% block title %}Playlist-Video Download{% endblock title %}
 
 {% block body %}
+<main>
 	<div class="container my-5">
 		<div class="row justify-content-center">
 			<div class="col-md-8">
-
-
-				<form method="post">
-					{% csrf_token %}
-					<div class="mb-3 d-flex">
-						<input placeholder="url" name="url" type="url" class="form-control me-2" id="url" required>
-						<button type="submit" class="btn btn-primary px-4">Get</button>
-					</div>
-				
-					<div class="mb-3 d-flex justify-content-space-around">
-
-							<div class="form-check">
-								<input class="form-check-input" onchange="toggleQOptions()" type="radio" name="vs-option" id="vs-option1" value="video" checked>
-								<label class="form-check-label" for="vs-option1">
-									video quility
-								</label>
-								
-							</div>
-
-							<div class="form-check">
-								<input class="form-check-input" onchange="toggleQOptions()" type="radio" name="vs-option" id="vs-option2" value="sound">
-								<label class="form-check-label" for="vs-option2">
-									sound quality
-								</label>
-							</div>
+				<section>
+					<form method="post">
+						{% csrf_token %}
+						<div class="mb-3 d-flex">
+							<input placeholder="playlist or video url" name="url" type="url" class="form-control me-2" id="url" required>
+							<button type="submit" class="btn btn-primary px-4">Get</button>
 						</div>
-						<select onclick="fixText()" name="v-quality" id="v-quality" class="form-control w-25" required>
-							<option value="" class="t-muted">Choose Video quality <i class="bi bi-caret-down-fill"></i></option>
-							<option value="144p">144p</option>
-							<option value="240p">240p</option>
-							<option value="360p">360p</option>
-							<option value="480p">480p</option>
-							<option value="720p">720p</option>
-							<option value="1080p">1080p</option>
-							<option value="highest">highest quailty</option>
-						</select>
-					</div>
-				</form>
+						<div class="mb-3 d-flex justify-content-space-around">
+								<div class="form-check">
+									<input class="form-check-input" onchange="toggleQOptions()" type="radio" name="vs-option" id="vs-option1" value="video" checked>
+									<label class="form-check-label" for="vs-option1">
+										video quility
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" onchange="toggleQOptions()" type="radio" name="vs-option" id="vs-option2" value="sound">
+									<label class="form-check-label" for="vs-option2">
+										sound quality
+									</label>
+								</div>
+							</div>
+							<select onclick="fixText()" name="v-quality" id="v-quality" class="form-control w-25" required>
+								<option value="" class="t-muted">Choose Video quality <i class="bi bi-caret-down-fill"></i></option>
+								<option value="144p">144p</option>
+								<option value="240p">240p</option>
+								<option value="360p">360p</option>
+								<option value="480p">480p</option>
+								<option value="720p">720p</option>
+								<option value="1080p">1080p</option>
+								<option value="highest">highest quailty</option>
+							</select>
+						</div>
+					</form>
+				</section>
 				{% if videos|length > 0 %}
-				
 					{% for video in videos %}
-						
 						{% if video.local_src %}
 								<div class="card mt-5 w-100">
 									<div class="row g-0">
 										<div class="col-md-4">
-											<img src="{{video.thumbnail}}" class="img-fluid rounded-start" alt="...">
+											<img src="{{video.thumbnail}}" class="img-fluid rounded-start" alt="{{video.title}}">
 										</div>
 										<div class="col-md-8">
 											<div class="card-body h-90">
@@ -99,5 +94,5 @@
 
 		</div>
 	</div>
-
+</main>
 {% endblock body %}

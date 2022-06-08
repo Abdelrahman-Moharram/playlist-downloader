@@ -1,10 +1,12 @@
+from asyncio.windows_events import NULL
 from django.db import models
 from django.contrib.auth.models import User
 import zipfile
 import os
-from datetime import datetime, date, timedelta
+from datetime import datetime, timedelta
 import shutil
 from django.utils import timezone
+from django.db.models import Q
 
 
 
@@ -16,20 +18,31 @@ from django.utils import timezone
 		
 class VideoManager(models.Manager):
 	def select_old(self):
-			startdate = timezone.now()
-			enddate = startdate - timedelta(days=7)
-			vids = Video.objects.filter(pdatetime__range=["2011-01-31 12:00:00", enddate])
-			self.delete_data()
+			userNone = Video.objects.filter(user=None)
+			self.delete_data(userNone.exclude(local_src=NULL))
+			userNone.delete()
+			startdate = datetime(2011, 1, 25, 12, 0, 0, 423063)
+			enddate = datetime.now() - timedelta(days=7)
+			vids = Video.objects.filter(pdatetime__range=[startdate, enddate])
 			vids.delete()
+			self.delete_data(Video.objects.filter(pdatetime__range=[startdate, timezone.now() - timedelta(hours=1)]).exclude(local_src=NULL))
 
 
-	def delete_data(self):
-		if Video.pdatetime in ("2011-01-31 12:00:00", timezone.now() - timedelta(hours=1)) or len(Video.objects.all()) == 0:
+	def delete_data(self, vids):
+		print("delete data => ",vids)
+		for vid in vids:
 			try:
-				shutil.rmtree("media/files/")
+				shutil.rmtree(str(vid.local_src).replace(".zip", ""))
 			except:
 				pass
-
+			try:
+				os.remove(str(vid.local_src))
+			except:
+				pass
+			vid.local_src = NULL
+			vid.save()
+		
+		
 
 
 
