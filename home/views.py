@@ -1,11 +1,13 @@
 from django.shortcuts import render
+from .models import Video, save_video
 from pytube.contrib.playlist import Playlist
 from pytube import YouTube
 from pytube.cli import on_progress
 import datetime
 import os
-from .models import Video, save_video
 from datetime import datetime
+
+
 
 
 def Download_Playlist(url, v_quality, vs_option):
@@ -53,6 +55,9 @@ def Download_Video(url, v_quality, vs_option):
         print(yt.title)
         files = stream.download(filename="media/files/"+folder+"/"+yt.title+".mp4")
         return yt.title, folder,  files, "mp4", yt.thumbnail_url
+
+
+
 
 
 def index(request):
