@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from django.db import models
 from django.contrib.auth.models import User
 import zipfile
@@ -6,27 +5,19 @@ import os
 from datetime import datetime, timedelta
 import shutil
 from django.utils import timezone
-from django.db.models import Q
 
-
-
-
-
-
-
-
-		
 class VideoManager(models.Manager):
 	def select_old(self):
 			userNone = Video.objects.filter(user=None)
-			self.delete_data(userNone.exclude(local_src=NULL))
+			self.delete_data(userNone.exclude(local_src=None))
 			userNone.delete()
+
 			startdate = datetime(2011, 1, 25, 12, 0, 0, 423063)
-			enddate = datetime.now() - timedelta(days=7)
+			enddate = timezone.now() - timedelta(days=7)
+
 			vids = Video.objects.filter(pdatetime__range=[startdate, enddate])
 			vids.delete()
-			self.delete_data(Video.objects.filter(pdatetime__range=[startdate, timezone.now() - timedelta(hours=1)]).exclude(local_src=NULL))
-
+			self.delete_data(Video.objects.filter(pdatetime__range=[startdate, timezone.now() - timedelta(hours=1)]).exclude(local_src=None))
 
 	def delete_data(self, vids):
 		print("delete data => ",vids)
@@ -39,24 +30,13 @@ class VideoManager(models.Manager):
 				os.remove(str(vid.local_src))
 			except:
 				pass
-			vid.local_src = NULL
+			vid.local_src = None
 			vid.save()
-		
-		
 
 
-
-
-
-
-
-
-
-def save_video(instance,filename, ext=None):	
+def save_video(instance,filename, ext=None):
 	zip_directory("media/files/%s"%(instance.d_datetime), "media/files/%s.zip"%(instance.d_datetime))
 	return "media/files/%s.zip"%(instance.d_datetime)
-
-
 
 
 def getExtention(filename, ext=None):
@@ -82,10 +62,7 @@ def zip_directory(folder_path, zip_path):
 				zipf.write(file_path, file_path[len_dir_path:])
 
 
-
-
 class Video(models.Model):
-	
 	title 			= models.CharField(max_length=300)
 	url 				= models.CharField(max_length=500)
 	d_datetime	= models.CharField(max_length=50)
