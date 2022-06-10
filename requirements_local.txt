@@ -52,3 +52,4 @@ urllib3==1.26.8
 virtualenv==20.13.1
 w3lib==1.22.0
 zope.interface==5.4.0
+python-decouple==3.1
