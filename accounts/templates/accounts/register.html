@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block headerElse %}
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+	<div class="row">
+	    <div class="col-xl-12">
+		<div class="bradcam_text">
+		    <h3>SIGN UP</h3>
+		</div>
+	    </div>
+	</div>
+    </div>
+</div>
+{% endblock headerElse %}
+{% block body %}
+    
+
+
+
+<div class="container w-25">
+	<div class="row">
+	    <div class="mt-5 mb-5 white-bg">
+		    <form method="POST">
+			{% csrf_token %}
+			<div class="row">
+
+				<div class="col-md-6 my-2">
+					<div class="input_field">
+				    		<input class="form-control mt-1 mb-3" name="first_name" type="text" placeholder="First Name">
+					</div>
+			    	</div>
+				
+				<div class="col-md-6 my-2">
+					<div class="input_field">
+				    		<input class="form-control mt-1 mb-3" name="last_name" type="text" placeholder="Last Name">
+					</div>
+			    	</div>
+			    
+			    	<div class="col-md-12 my-2">
+					<div class="input_field">
+				    		<input class="form-control mt-1 mb-3" name="username" type="text" placeholder="Username">
+					</div>
+			    	</div>
+				    
+				<div class="col-md-12 my-2">
+					<div class="input_field">
+					    	<input class="form-control mt-1 mb-3" name="email" type="email" placeholder="Email">
+					</div>
+			    	</div>
+				
+				<div class="col-md-12 my-2">
+				    <div class="input_field">
+					<input class="form-control mt-1 mb-3" name="password" type="password" placeholder="Password">
+				    </div>
+				</div>
+
+			    	<div class="col-md-12 my-2">
+				    <div class="input_field">
+					<input class="form-control mt-1 mb-3" name="confirm_password" type="password" placeholder="Confirm Password">
+				    </div>
+				</div>
+					
+				<div class="col-md-12 my-2">
+					<div class="input_field">
+					</div>
+				    </div>
+			    <div class="col-md-12 my-2">
+				<div class="submit_btn">
+				    <button class="btn btn-primary w-100" type="submit">Apply Now</button>
+				</div>
+			    </div>
+			</div>
+		    </form>
+		</div>
+	</div>
+</div>
+
+{% endblock body %}

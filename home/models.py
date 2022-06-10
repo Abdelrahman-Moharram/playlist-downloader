@@ -5,6 +5,9 @@ import os
 from datetime import datetime, timedelta
 import shutil
 from django.utils import timezone
+from django.db.models.signals import post_save
+from django.core.cache import cache
+from django.dispatch import receiver
 
 class VideoManager(models.Manager):
 	def select_old(self):
@@ -78,3 +81,16 @@ class Video(models.Model):
 
 	def __str__(self):
 		return self.title
+
+class notification(models.Model):
+	title 		= models.CharField(max_length=50)
+	body 			= models.TextField()
+	date 			= models.DateTimeField(auto_now=True)
+	user 			= models.ForeignKey(User, on_delete=models.CASCADE)
+	seen 			= models.BooleanField(default=False)
+	def __str__(self):
+		return self.title
+		
+@receiver(post_save)
+def clear_the_cache(**kwargs):
+	cache.clear()

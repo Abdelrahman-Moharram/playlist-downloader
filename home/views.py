@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from .models import Video, save_video
+from django.shortcuts import render, redirect, reverse
+from .models import Video, save_video, notification
 from pytube.contrib.playlist import Playlist
 from pytube import YouTube
 from pytube.cli import on_progress
@@ -109,4 +109,15 @@ def index(request):
         return render(request, "home/index.html", {"videos": videos})
     request.session["videos"] = []
     Video.objects.select_old()
-    return render(request, "home/index.html", {})
+    
+    return render(request, "home/index.html", {"notifications":notification.objects.filter(user=request.user, seen=False)})
+
+def notfound404(request, exception):
+    return render(request, "home/notfound404.html",{})
+
+
+def notifications(request, notifyId):
+    notify = notification.objects.get(id=notifyId)
+    notify.seen = True
+    notify.save()
+    return redirect('home:index')
