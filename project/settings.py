@@ -14,7 +14,8 @@ from decouple import config
 from pathlib import Path
 import os
 from dj_database_url import parse as dburl
-
+import django_heroku
+django_heroku.settings(locals())
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECRET_KEY = 'django-insecure-1t5vec@zuh-2s@4&_cd)n13r8l=+!d68)csdxhbp=uzt8*c2o0'
 SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG')
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'playlist-video-download.herokuapp.com']
 
