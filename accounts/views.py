@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-
+from home.models import Video
 
 
 def login_user(request):
@@ -25,7 +25,7 @@ def login_user(request):
                         else:
                                 return redirect("home:index")
                 else:
-                        messages.warning(request,"Can't Login E-Mail or Password are invalid",extra_tags="warning")
+                        messages.warning(request,"Can't Login E-Mail or Password are invalid",extra_tags="danger")
 
         return render(request,'accounts/login.html', {})
 
@@ -48,11 +48,10 @@ def register(request):
                                 request.session['username'] = user.username
                                 request.session['is_superuser'] = user.is_superuser
                                 messages.success(request,"Your Data has Saved!",extra_tags="success")
-
                                 return redirect("home:index")
                         else:
-                                messages.warning(request,"Error while signing you in but your data has Saved!",extra_tags="warning")
-                                return redirect("jobs:jobLis")
+                                messages.warning(request,"Error while signing you in but your data has Saved!",extra_tags="danger")
+                                return redirect("home:index")
                 else:
                         messages.warning(request,"Password Not The Same",extra_tags="warning")
         return render(request,'accounts/register.html', {})
@@ -61,3 +60,10 @@ def register(request):
 def logout_user(request):
         logout(request)
         return redirect("home:index")
+
+
+@login_required
+def profile(request, username):
+        user = User.objects.get(username=username)
+        if request.user == user:
+                return render(request, 'accounts/profile.html', {"videos":Video.objects.filter(user=request.user)})
