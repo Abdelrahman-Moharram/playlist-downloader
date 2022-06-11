@@ -53,3 +53,4 @@ virtualenv==20.13.1
 w3lib==1.22.0
 zope.interface==5.4.0
 python-decouple==3.1
+dj-database-url==0.5.0
