@@ -109,8 +109,10 @@ def index(request):
         return render(request, "home/index.html", {"videos": videos})
     request.session["videos"] = []
     Video.objects.select_old()
-    
-    return render(request, "home/index.html", {"notifications":notification.objects.filter(user=request.user, seen=False)})
+    if request.user.username:
+        return render(request, "home/index.html", {"notifications":notification.objects.filter(user=request.user, seen=False)})
+    else:
+        return render(request, "home/index.html", {})
 
 def notfound404(request, exception):
     return render(request, "home/notfound404.html",{})
