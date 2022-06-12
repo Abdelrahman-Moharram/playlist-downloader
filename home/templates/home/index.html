@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static%}
 {% load embed_video_tags %}
-{% block title %}Playlist-Video Download{% endblock title %}
 {% block body %}
 <main>
 	<div class="container my-5">
@@ -28,7 +27,7 @@
 									</label>
 								</div>
 							</div>
-							<select onclick="fixText()" name="v-quality" id="v-quality" class="form-control w-25" required>
+							<select onclick="fixText()" name="v-quality" id="v-quality" class="form-control w-25 min-width-240" required>
 								<option value="" class="t-muted">Choose Video quality <i class="bi bi-caret-down-fill"></i></option>
 								<option value="144p">144p</option>
 								<option value="240p">240p</option>
