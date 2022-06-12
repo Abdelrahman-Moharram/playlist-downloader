@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, reverse
-from .models import Video, save_video, notification
+from .models import Video, save_video, notification, report
 from pytube.contrib.playlist import Playlist
 from pytube import YouTube
 from pytube.cli import on_progress
@@ -58,7 +58,8 @@ def Download_Video(url, v_quality, vs_option):
 
 
 
-
+def Report(request):
+    return render(request, 'home/repot.html', {})
 
 def index(request):
     if request.method == "POST":
