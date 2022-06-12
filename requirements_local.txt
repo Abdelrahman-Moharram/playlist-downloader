@@ -16,8 +16,10 @@ typing_extensions==4.2.0
 tzdata==2022.1
 urllib3==1.26.9
 django-heroku==0.3.1
-Twisted==22.1.0
-virtualenv==20.13.1
-w3lib==1.22.0
-zope.interface==5.4.0
-
+asgiref==3.5.2
+beautifulsoup4==4.11.1
+certifi==2022.5.18.1
+charset-normalizer==2.0.12
+psycopg2==2.9.3
+psycopg2-binary==2.9.3
+whitenoise==6.2.0

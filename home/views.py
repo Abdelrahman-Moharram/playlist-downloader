@@ -123,3 +123,5 @@ def notifications(request, notifyId):
     notify.seen = True
     notify.save()
     return redirect('home:index')
+
+

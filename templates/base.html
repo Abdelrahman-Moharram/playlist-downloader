@@ -16,7 +16,7 @@
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 				<div class="container-fluid">
-					<a class="navbrand-link" href="{% url 'home:index' %}">
+					<a class="text-decoration-none" href="{% url 'home:index' %}">
 						<h1 class="navbar-brand mb-0">Playlist Video Download</h1>
 					</a>
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,11 +26,18 @@
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
 						</ul>
-						<div class="d-flex" role="search">
-							<a href="{% url 'accounts:login' %}" class="btn btn-warning">Login</a>
-							<span class="mx-4 text-white mt-2">or</span>
-							<a href="{% url 'accounts:register' %}" class="btn btn-info">Signup</a>
-						</div>
+						{% if user.is_authenticated %}	
+							<div class="d-flex">
+								<a href="{% url 'accounts:profile' user.username %}" class="btn bg-white mx-2"><i class="bi bi-person-circle"> {{user.username}}</i></a>
+								<a href="{% url 'accounts:logout' %}" class="btn btn-info mx-2 bg-dark text-white">Logout <i class="bi bi-box-arrow-right"></i></a>
+							</div>
+						{% else %}
+							<div class="d-flex">
+								<a href="{% url 'accounts:login' %}" class="btn btn-warning">Login</a>
+								<span class="mx-4 text-white mt-2">or</span>
+								<a href="{% url 'accounts:register' %}" class="btn btn-info">Signup</a>
+							</div>
+						{% endif %}
 					</div>
 				</div>
 			</nav>
@@ -40,22 +47,47 @@
 	
     	{% block body %}{% endblock body %}
 
-			<div class="toast-container position-static position-fixed bottom-0 end-0 ">
-				
+			<div class="toast-container position-static position-fixed bottom-0 end-0 mx-2">
+
+					<div class="toast p-3 my-2 bg-dark" role="alert" id="beta-notify">
+						<div class="toast-header">
+							<strong class="me-auto">Beta</strong>
+							<small class="text-muted"></small>
+							<button type="button" type="button" class="btn-close" onclick="hideToast('beta-notify')"></button>
+						</div>
+						<a href="" class="text-decoration-none text-white">
+						<div class="toast-body text-white">
+							Our site is still <span class="fw-bold">BETA</span> and we still devoloping it, so we hope you understanding and if you want to report  any thing to fix the site please click on this <a class="text-white" href=""> Link </a>
+						</div>
+						</a>
+					</div>
 				{% if not user.is_authenticated %}
-					<div class="toast p-3 my-2" role="alert" id="default-notify">
+					<div class="toast p-3 my-2 bg-dark" role="alert" id="default-notify">
 						<div class="toast-header">
 							<strong class="me-auto">Registration</strong>
 							<small class="text-muted"></small>
 								<button type="button" type="button" class="btn-close" onclick="hideToast('default-notify')"></button>
 						</div>
-						<div class="toast-body">
+						<div class="toast-body text-white">
 							if you registered you can save your download history for 7 days !
 						</div>
 					</div>
 				{% endif %}
 				
-						
+				{% if messages is not '' %}
+                {% for message in messages %}
+										<div class="toast p-3 my-2 bg-{{message.extra_tags}}" role="alert" id="{{message.level_tag}}{{message.extra_tags}}">
+											<div class="toast-header">
+												<strong class="me-auto">{{message.level_tag}}</strong>
+												<small class="text-muted"></small>
+												<button type="button" type="button" class="btn-close" onclick="hideToast('{{message.level_tag}}{{message.extra_tags}}')"></button>
+											</div>
+											<div class="toast-body">
+												{{message}}
+											</div>
+										</div>
+                {% endfor %}
+            {% endif %}
 				{% for notify in notifications %}
 					<div class="toast p-3 my-2" role="alert" id="{{notify.id}}">
 						<div class="toast-header">
