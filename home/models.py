@@ -1,3 +1,4 @@
+import email
 from django.db import models
 from django.contrib.auth.models import User
 import zipfile
@@ -52,9 +53,10 @@ def getExtention(filename, ext=None):
 			return filename[c:]
 	return filename.split(".")
 
-def thumbnail_upload(d_datetime,filename):
-		thumbnail,extention = getExtention(filename)
-		return "media/thumbnails/%s/%s.%s"%(d_datetime,thumbnail,extention)
+def image_upload(instance,filename):
+		print("image_upload")
+		__,extention = getExtention(filename)
+		return "media/reports/%s.%s"%(instance.id,extention)
 
 def zip_directory(folder_path, zip_path):
 	with zipfile.ZipFile(zip_path, mode='w') as zipf:
@@ -90,7 +92,14 @@ class notification(models.Model):
 	seen 			= models.BooleanField(default=False)
 	def __str__(self):
 		return self.title
-		
+
+class report (models.Model):
+	user			= models.ForeignKey(User, on_delete=models.PROTECT, blank=True, null=True)
+	message 	= models.TextField(max_length=1000)
+	image 		= models.ImageField(upload_to=image_upload, blank=True, null=True)
+	Datetime	= models.DateTimeField(auto_now=True)
+	Email 		= models.CharField(max_length=150)
+
 @receiver(post_save)
 def clear_the_cache(**kwargs):
 	cache.clear()

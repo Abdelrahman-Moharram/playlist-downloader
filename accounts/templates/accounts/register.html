@@ -4,66 +4,69 @@
 
 {% block body %}
     
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3653458732118461"
-     crossorigin="anonymous"></script>
-<!-- vertical_ad_2 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-3653458732118461"
-     data-ad-slot="5790161304"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+<main>
 
 
-<div class="container w-25">
+<div class="container-fluid">
 	<div class="row">
-	    <div class="mt-5 mb-5 white-bg">
+		<div class="col-md-3">
+			<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3653458732118461"
+						crossorigin="anonymous"></script>
+				<!-- custom ad-1 -->
+				<ins class="adsbygoogle"
+						style="display:block"
+						data-ad-client="ca-pub-3653458732118461"
+						data-ad-slot="9927882710"
+						data-ad-format="auto"
+						data-full-width-responsive="true"></ins>
+				<script>
+						(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>			
+		</div>
+		<div class="col-md-6 col-md-6 dt-boxshadow rounded-4 ptx my-5 bg-white">
+				<h1>Register</h1>
 		    <form method="POST">
-			{% csrf_token %}
+				{% csrf_token %}
 			<div class="row">
-
+				
+				
 				<div class="col-md-6 my-2">
-					<div class="input_field">
-				    		<input class="form-control mt-1 mb-3" name="first_name" type="text" placeholder="First Name">
+					<div class="input-container-default">
+				    		<input class="input-default" name="first_name" type="text" placeholder="First Name">
 					</div>
 			    	</div>
 				
 				<div class="col-md-6 my-2">
-					<div class="input_field">
-				    		<input class="form-control mt-1 mb-3" name="last_name" type="text" placeholder="Last Name">
+					<div class="input-container-default">
+				    		<input class="input-default" name="last_name" type="text" placeholder="Last Name">
 					</div>
 			    	</div>
 			    
 			    	<div class="col-md-12 my-2">
-					<div class="input_field">
-				    		<input class="form-control mt-1 mb-3" name="username" type="text" placeholder="Username">
+					<div class="input-container-default">
+				    		<input class="input-default" name="username" type="text" placeholder="Username">
 					</div>
 			    	</div>
 				    
 				<div class="col-md-12 my-2">
-					<div class="input_field">
-					    	<input class="form-control mt-1 mb-3" name="email" type="email" placeholder="Email">
+					<div class="input-container-default">
+					    	<input class="input-default" name="email" type="email" placeholder="Email">
 					</div>
 			    	</div>
 				
 				<div class="col-md-12 my-2">
-				    <div class="input_field">
-					<input class="form-control mt-1 mb-3" name="password" type="password" placeholder="Password">
+				    <div class="input-container-default">
+					<input class="input-default" name="password" type="password" placeholder="Password">
 				    </div>
 				</div>
 
 			    	<div class="col-md-12 my-2">
-				    <div class="input_field">
-					<input class="form-control mt-1 mb-3" name="confirm_password" type="password" placeholder="Confirm Password">
+				    <div class="input-container-default">
+					<input class="input-default" name="confirm_password" type="password" placeholder="Confirm Password">
 				    </div>
 				</div>
 					
 				<div class="col-md-12 my-2">
-					<div class="input_field">
-					</div>
 				    </div>
 			    <div class="col-md-12 my-2">
 				<div class="submit_btn">
@@ -73,30 +76,23 @@
 			</div>
 		    </form>
 		</div>
-		
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3653458732118461"
-				crossorigin="anonymous"></script>
-		<ins class="adsbygoogle"
-				style="display:block"
-				data-ad-format="autorelaxed"
-				data-ad-client="ca-pub-3653458732118461"
-				data-ad-slot="2862128520"></ins>
-		<script>
-				(adsbygoogle = window.adsbygoogle || []).push({});
-		</script>
+		<div class="col-md-3">
+			<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3653458732118461"
+			crossorigin="anonymous"></script>
+			<!-- vertical_ad_2 -->
+			<ins class="adsbygoogle"
+			style="display:block"
+			data-ad-client="ca-pub-3653458732118461"
+			data-ad-slot="5790161304"
+			data-ad-format="auto"
+			data-full-width-responsive="true"></ins>
+			<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+	
+		</div>
 	</div>
 </div>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3653458732118461"
-    crossorigin="anonymous"></script>
-<!-- custom ad-1 -->
-<ins class="adsbygoogle"
-    style="display:block"
-    data-ad-client="ca-pub-3653458732118461"
-    data-ad-slot="9927882710"
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-<script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+</main>
 
 {% endblock body %}
