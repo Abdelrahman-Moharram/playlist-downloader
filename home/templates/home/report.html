@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block title %}report | {% endblock title %}
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+
+		<div class="col-md-3">
+			
+			<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3653458732118461"
+			crossorigin="anonymous"></script>
+			<!-- vertical_ad_2 -->
+			<ins class="adsbygoogle"
+			style="display:block"
+			data-ad-client="ca-pub-3653458732118461"
+			data-ad-slot="5790161304"
+			data-ad-format="auto"
+			data-full-width-responsive="true"></ins>
+			<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+	
+			</div>
+			<div class="col-md-6 dt-boxshadow rounded-4 ptx my-5 bg-white">
+				<h1>Report</h1>
+				<form method="post">
+					{% csrf_token %}					
+					<div class="input-container-default">
+						<input name="Email" placeholder="E-Mail" class="input-default" type="email">
+					</div>
+					<div class="input-container-default">
+						<textarea name="message" class="input-default" placeholder="message" cols="30" rows="10"></textarea>
+					</div>					
+					<div class="my-3">
+            <div class="input-container-default">
+                <input class="input-default" name="image" type="file" id="formFile" onchange="preview()">
+								<img id="frame" src="" class="img-fluid float-left" width="200px" />
+            </div>
+						<div class="float-right my-5">
+							<button type="submit" class="btn btn-primary">send</button>
+						</div>
+        </div>
+					
+				</form>
+			</div>
+			<div class="col-md-3">
+				<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3653458732118461"
+						crossorigin="anonymous"></script>
+				<!-- custom ad-1 -->
+				<ins class="adsbygoogle"
+						style="display:block"
+						data-ad-client="ca-pub-3653458732118461"
+						data-ad-slot="9927882710"
+						data-ad-format="auto"
+						data-full-width-responsive="true"></ins>
+				<script>
+						(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+		
+			</div>
+		</div>
+	</div>
+{% endblock body %}

@@ -54,6 +54,7 @@ def getExtention(filename, ext=None):
 	return filename.split(".")
 
 def image_upload(instance,filename):
+		print("image_upload")
 		__,extention = getExtention(filename)
 		return "media/reports/%s.%s"%(instance.id,extention)
 
@@ -93,9 +94,9 @@ class notification(models.Model):
 		return self.title
 
 class report (models.Model):
-	user			= models.CharField(max_length=150)
+	user			= models.ForeignKey(User, on_delete=models.PROTECT, blank=True, null=True)
 	message 	= models.TextField(max_length=1000)
-	image 		= models.ImageField(upload_to=image_upload)
+	image 		= models.ImageField(upload_to=image_upload, blank=True, null=True)
 	Datetime	= models.DateTimeField(auto_now=True)
 	Email 		= models.CharField(max_length=150)
 

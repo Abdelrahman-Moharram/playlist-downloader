@@ -20,6 +20,4 @@ asgiref==3.5.2
 beautifulsoup4==4.11.1
 certifi==2022.5.18.1
 charset-normalizer==2.0.12
-psycopg2==2.9.3
-psycopg2-binary==2.9.3
 whitenoise==6.2.0

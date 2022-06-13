@@ -58,22 +58,11 @@
 
 			<div class="toast-container position-static position-fixed bottom-0 end-0 mx-2">
 
-					<div class="toast p-3 my-2 bg-dark" role="alert" id="beta-notify">
-						<div class="toast-header">
-							<strong class="me-auto">Beta</strong>
-							<small class="text-muted"></small>
-							<button type="button" type="button" class="btn-close" onclick="hideToast('beta-notify')"></button>
-						</div>
-						<a href="" class="text-decoration-none text-white">
-						<div class="toast-body text-white">
-							Our site is still <span class="fw-bold">BETA</span> and we still devoloping it, so we hope you understanding and if you want to report  any thing to fix the site please click on this <a href=""> Link </a>
-						</div>
-						</a>
-					</div>
+					
 				{% if not user.is_authenticated %}
 					<div class="toast p-3 my-2 bg-dark" role="alert" id="default-notify">
 						<div class="toast-header">
-							<strong class="me-auto">Registration</strong>
+							<strong class="me-auto color-black">Registration</strong>
 							<small class="text-muted"></small>
 								<button type="button" type="button" class="btn-close" onclick="hideToast('default-notify')"></button>
 						</div>
@@ -83,10 +72,23 @@
 					</div>
 				{% endif %}
 				
+				
+				{% for notify in notifications %}
+					<div class="toast p-3 my-2" role="alert" id="{{notify.id}}">
+						<div class="toast-header">
+							<strong class="me-auto color-black">{{notify.title}}</strong>
+							<small class="text-muted">{{notify.date}}</small>
+							<a href="{% url 'home:notfications' notify.id %}" class="btn-close"></a>
+						</div>
+						<div class="toast-body">
+							{{notify.body}}
+						</div>
+					</div>
+				{% endfor %}
 				{% if messages is not '' %}
                 {% for message in messages %}
 										<div class="toast p-3 my-2 bg-{{message.extra_tags}}" role="alert" id="{{message.level_tag}}{{message.extra_tags}}">
-											<div class="toast-header">
+											<div class="toast-header color-black">
 												<strong class="me-auto">{{message.level_tag}}</strong>
 												<small class="text-muted"></small>
 												<button type="button" type="button" class="btn-close" onclick="hideToast('{{message.level_tag}}{{message.extra_tags}}')"></button>
@@ -97,18 +99,18 @@
 										</div>
                 {% endfor %}
             {% endif %}
-				{% for notify in notifications %}
-					<div class="toast p-3 my-2" role="alert" id="{{notify.id}}">
-						<div class="toast-header">
-							<strong class="me-auto">{{notify.title}}</strong>
-							<small class="text-muted">{{notify.date}}</small>
-							<a href="{% url 'home:notfications' notify.id %}" class="btn-close"></a>
+						<div class="toast p-3 my-2 bg-dark" role="alert" id="beta-notify">
+							<div class="toast-header">
+								<strong class="me-auto color-black">Beta</strong>
+								<small class="text-muted"></small>
+								<button type="button" type="button" class="btn-close" onclick="hideToast('beta-notify')"></button>
+							</div>
+							<a href="{% url 'home:report' %}" class="text-decoration-none text-white">
+							<div class="toast-body text-white">
+								Our site is still <span class="fw-bold">BETA</span> and we still devoloping it, so we hope you understanding and if you want to report  any thing to fix the site please click on this <a href="{% url 'home:report' %}"> Link </a>
+							</div>
+							</a>
 						</div>
-						<div class="toast-body">
-							{{notify.body}}
-						</div>
-					</div>
-				{% endfor %}
 			</div>
 			<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3653458732118461"
     	 crossorigin="anonymous"></script>
