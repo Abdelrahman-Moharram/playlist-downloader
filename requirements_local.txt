@@ -25,3 +25,4 @@ psycopg2-binary==2.9.3
 whitenoise==6.2.0
 pytube @ git+https://github.com/pytube/pytube@0a2347010ef8a0a518fbf613caf28b56e3be212c
 django-heroku==0.3.1
+django-jazzmin
