@@ -28,10 +28,10 @@
 				<form method="post" enctype="multipart/form-data">
 					{% csrf_token %}					
 					<div class="input-container-default">
-						<input name="Email" placeholder="E-Mail" class="input-default" type="email">
+						<input name="Email" placeholder="E-Mail" class="input-default" type="email" required>
 					</div>
 					<div class="input-container-default">
-						<textarea name="message" class="input-default" placeholder="message" cols="30" rows="10"></textarea>
+						<textarea name="message" class="input-default" placeholder="message" cols="30" rows="10" required></textarea>
 					</div>					
 					<div class="my-3">
             <div class="input-container-default">
