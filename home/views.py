@@ -1,5 +1,4 @@
-from email.mime import image
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect
 from .models import Video, save_video, notification, report
 from pytube.contrib.playlist import Playlist
 from pytube import YouTube
@@ -62,7 +61,7 @@ def Download_Video(url, v_quality, vs_option):
 
 def Report(request):
     if request.method == "POST":
-        reprt = report.objects.create(message=request.POST['message'], Email=request.POST['Email'], image=request.POST['image'])
+        reprt = report.objects.create(message=request.POST['message'], Email=request.POST['Email'], image=request.FILES['image'])
         if request.user.username:
             reprt.user = request.user
         reprt.save()

@@ -23,7 +23,7 @@
 			</div>
 			<div class="col-md-6 dt-boxshadow rounded-4 ptx my-5 bg-white">
 				<h1>Report</h1>
-				<form method="post">
+				<form method="post" enctype="multipart/form-data">
 					{% csrf_token %}					
 					<div class="input-container-default">
 						<input name="Email" placeholder="E-Mail" class="input-default" type="email">
@@ -33,7 +33,7 @@
 					</div>					
 					<div class="my-3">
             <div class="input-container-default">
-                <input class="input-default" name="image" type="file" id="formFile" onchange="preview()">
+                <input class="input-default" name="image" type="file" id="formFile">
 								<img id="frame" src="" class="img-fluid float-left" width="200px" />
             </div>
 						<div class="float-right my-5">

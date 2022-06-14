@@ -5,7 +5,7 @@ import zipfile
 import os
 from datetime import datetime, timedelta
 import shutil
-from django.utils import timezone
+# from django.utils import timezone
 from django.db.models.signals import post_save
 from django.core.cache import cache
 from django.dispatch import receiver
@@ -17,11 +17,11 @@ class VideoManager(models.Manager):
 			userNone.delete()
 
 			startdate = datetime(2011, 1, 25, 12, 0, 0, 423063)
-			enddate = timezone.now() - timedelta(days=7)
+			enddate = datetime.now() - timedelta(days=7)
 
 			vids = Video.objects.filter(pdatetime__range=[startdate, enddate])
 			vids.delete()
-			self.delete_data(Video.objects.filter(pdatetime__range=[startdate, timezone.now() - timedelta(hours=1)]).exclude(local_src=None))
+			self.delete_data(Video.objects.filter(pdatetime__range=[startdate, datetime.now() - timedelta(minutes=1)]).exclude(local_src=None))
 
 	def delete_data(self, vids):
 		print("delete data => ",vids)
@@ -53,10 +53,7 @@ def getExtention(filename, ext=None):
 			return filename[c:]
 	return filename.split(".")
 
-def image_upload(instance,filename):
-		print("image_upload")
-		__,extention = getExtention(filename)
-		return "media/reports/%s.%s"%(instance.id,extention)
+
 
 def zip_directory(folder_path, zip_path):
 	with zipfile.ZipFile(zip_path, mode='w') as zipf:
@@ -93,10 +90,16 @@ class notification(models.Model):
 	def __str__(self):
 		return self.title
 
+def image_upload(instance,filename):
+		print("image_upload")
+		__,extention = getExtention(filename)
+		return "media/reports/%s.%s"%(str(datetime.timestamp(datetime.now())),extention)
+
+
 class report (models.Model):
 	user			= models.ForeignKey(User, on_delete=models.PROTECT, blank=True, null=True)
 	message 	= models.TextField(max_length=1000)
-	image 		= models.ImageField(upload_to=image_upload, blank=True, null=True)
+	image 		= models.FileField(upload_to=image_upload, blank=True, null=True)
 	Datetime	= models.DateTimeField(auto_now=True)
 	Email 		= models.CharField(max_length=150)
 

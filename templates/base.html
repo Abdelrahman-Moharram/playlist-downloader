@@ -4,10 +4,18 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Online Free Playlist or Video Download from Youtube in just one minute in all quilities in mp4 and also audio in mp3">
-    <meta name="keywords" content="downloadyoutube, youtube free download, savefrom net, تنزيل من اليوتيوب mp3, youtube downloader playlist, mp3 download, you mp3, downloader youtube online, mp3 downloads youtube, youtube list downloader, mp3 youtube, playlist download, mp4 download, video download, mp3 youtube download, تحميل من اليوتيوب, youtube videos download pc, mp4 download youtube, youtube download playlist online, download youtube pc, youtube playlist download mp3, download playlist youtube mp4, youtube playlist mp3, mp3 تنزيل, mp3 download youtube online, youtube, download manager">
-		<meta name="author" content="bo_0dy">
-		<title>{% block title %}{% endblock title %} playlist download</title>
+    <meta name="description" content="Free youtube downloader online, free youtube video downloader online, download youtube online free, youtube downloader mp3 online free without any software, youtube multi downloader">
+    <meta name="keywords" content="Download youtube, multi download, youtube multi downloader, online free mp4 downloader, online free mp3 downloader, youtube all in one downloader">
+		<meta name="og:title" content="Free Youtube Multi Downloader Online">
+		<meta name="ogog:site_name" content="Free Youtube Multi Downloader Online">
+		<meta name="og:description" content="Free youtube downloader online, free youtube video downloader online, download youtube online free, youtube downloader mp3 online free without any software, youtube multi downloader">
+		<meta name="og:url" content="freeyoutubedownloader.com">
+		
+		<title>
+			{% if notifications|length > 0 %}
+				({{notifications|length}}) 
+			{% endif %}
+			{% block title %}{% endblock title %} Free Youtube Multi Downloader Online</title>
 		<link rel="shortcut icon" type="image/x-icon" href="{% static 'imgs/download-icon-png-5.webp' %}">
 		<link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
@@ -25,7 +33,7 @@
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 				<div class="container-fluid">
 					<a class="text-decoration-none" href="{% url 'home:index' %}">
-						<h1 class="navbar-brand mb-0">Playlist Download</h1>
+						<div class="navbar-brand mb-0">Free Youtube Multi Downloader Online</div>
 					</a>
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
