@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECRET_KEY = 'django-insecure-1t5vec@zuh-2s@4&_cd)n13r8l=+!d68)csdxhbp=uzt8*c2o0'
 SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =  config('DEBUG')
+# DEBUG =  config('DEBUG')
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'playlist-video-download.herokuapp.com']
 
@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'playlist-video-download.herokuapp.co
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
