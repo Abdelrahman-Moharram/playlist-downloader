@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =  True
+DEBUG =  config('DEBUG')
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'playlist-video-download.herokuapp.com']
 
@@ -143,8 +143,7 @@ if DEBUG:
             os.path.join(BASE_DIR, 'static')
        ]
 else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/' 
 
 
