@@ -21,7 +21,7 @@ class VideoManager(models.Manager):
 
 			vids = Video.objects.filter(pdatetime__range=[startdate, enddate])
 			vids.delete()
-			self.delete_data(Video.objects.filter(pdatetime__range=[startdate, datetime.now() - timedelta(minutes=1)]).exclude(local_src=None))
+			self.delete_data(Video.objects.filter(pdatetime__range=[startdate, datetime.now() - timedelta(minutes=30)]).exclude(local_src=None))
 
 	def delete_data(self, vids):
 		print("delete data => ",vids)
