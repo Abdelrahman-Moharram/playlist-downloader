@@ -19,7 +19,7 @@ def Download_Playlist(url, v_quality, vs_option):
     folder = str(datetime.timestamp(datetime.now()))
     os.makedirs("media/files/"+folder)
     for video_url in playlist.video_urls:
-        yt = YouTube(video_url, on_progress_callback=on_progress)
+        yt = YouTube(video_url, on_progress_callback=on_progress, use_oauth=True, allow_oauth_cache=True)
         if vs_option != "video":
             stream = yt.streams.get_audio_only()
             files = stream.download(filename="media/files/"+folder+"/"+yt.title+".mp3")
@@ -33,6 +33,7 @@ def Download_Playlist(url, v_quality, vs_option):
                 stream = yt.streams.filter(resolution=v_quality, res=v_quality).first()
             print(yt.title)
             files = stream.download(filename="media/files/"+folder+"/"+yt.title+".mp4")
+    yt = YouTube(url, on_progress_callback=on_progress, use_oauth=True, allow_oauth_cache=True)
     if vs_option != "video":
         return yt.title, folder, None, "mp3", yt.thumbnail_url, length
     return yt.title, folder, None, "mp4", yt.thumbnail_url, length
@@ -40,13 +41,13 @@ def Download_Playlist(url, v_quality, vs_option):
 def Download_Video(url, v_quality, vs_option):
     folder = str(datetime.timestamp(datetime.now()))
     os.makedirs("media/files/"+folder)
-    yt=YouTube(url,on_progress_callback=on_progress)
-    if vs_option != "video":
+    yt=YouTube(url,on_progress_callback=on_progress, use_oauth=True, allow_oauth_cache=True)
+    if vs_option == "sound":
         stream = yt.streams.get_audio_only()
         files = stream.download(filename="media/files/"+folder+"/"+yt.title+".mp3")
         return yt.title, folder,  files, "mp3", yt.thumbnail_url
 
-    else:
+    elif vs_option == "video":
         if v_quality == "highest":
             stream = yt.streams.get_highest_resolution()
         elif v_quality == "lowest":
@@ -56,6 +57,8 @@ def Download_Video(url, v_quality, vs_option):
         print(yt.title)
         files = stream.download(filename="media/files/"+folder+"/"+yt.title+".mp4")
         return yt.title, folder,  files, "mp4", yt.thumbnail_url
+    else:
+        return 0
 
 
 
